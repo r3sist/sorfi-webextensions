@@ -12,7 +12,7 @@ Browser extension for sorfi.org, using webextension API via Chrome/Firefox
 
 + [![Codacy Badge](https://api.codacy.com/project/badge/Grade/58846f71df604c40932e539a783863c7)](https://www.codacy.com/app/resist/sf-webextensions?utm_source=resist@bitbucket.org&amp;utm_medium=referral&amp;utm_content=resist/sf-webextensions&amp;utm_campaign=Badge_Grade)
 
-+ Sorfi apps documentation: https://sorfi.org/dokumentacio/appok  
++ Sorfi apps documentation: https://sorfi.org/dokumentacio/appok
 + Sorfi API: https://sorfi.org/dokumentacio/api 
 + Sorfi open source projects: https://sorfi.org/dokumentacio/opensource 
 + Sorfi contact: https://sorfi.org/dokumentacio/kapcsolat
