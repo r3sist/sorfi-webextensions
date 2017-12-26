@@ -1,0 +1,6 @@
+_dev/
+.idea/
+.git/
+
+*.pem
+*.crx

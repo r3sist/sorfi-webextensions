@@ -1,0 +1,27 @@
+{
+  "name": "Sorozat figyelő",
+  "version": "3.0.0",
+  "manifest_version": 2,
+  "description": "Sorozat figyelő felirat értesítő",
+  "homepage_url": "https://sorfi.org",
+  "icons": {
+    "16": "icons/sorfi-webextensions-icon16.png",
+    "19": "icons/sorfi-webextensions-icon19.png",
+    "48": "icons/sorfi-webextensions-icon48.png",
+    "64": "icons/sorfi-webextensions-icon64.png",
+    "128": "icons/sorfi-webextensions-icon128.png"
+  },
+  "default_locale": "hu",
+  "background": {
+    "scripts": ["src/bg/background.js"],
+    "persistent": true    
+  },
+  "options_ui": {
+    "page": "src/options/index.html"
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "https://sorfi.org/"
+  ]
+}
