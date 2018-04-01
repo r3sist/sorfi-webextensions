@@ -1,11 +1,10 @@
 {
-  "name": "Sorozat figyel\u0151 felirat értesítő",
-  "version": "3.0.1",
+  "name": "Sorozat figyelő felirat értesítő",
+  "version": "3.0.0",
   "manifest_version": 2,
   "description": "Sorozat figyelő felirat értesítő",
   "homepage_url": "https://sorfi.org",
-  "icons":
-  {
+  "icons": {
     "16": "assets/sorfi-webextensions-icon16.png",
     "19": "assets/sorfi-webextensions-icon19.png",
     "48": "assets/sorfi-webextensions-icon48.png",
@@ -13,27 +12,23 @@
     "128": "assets/sorfi-webextensions-icon128.png"
   },
   "default_locale": "hu",
-  "background":
-  {
-    "page": "sf-ch-bg.html",
+  "background": {
+    "scripts": [
+      "src/sorfi-webextensions-background.js"
+    ],
     "persistent": true
   },
-  "options_page": "sf-ch-opt.html",
-  "permissions":
-  [
-    "contextMenus",
-    "tabs",
-    "https://sorfi.org/*",
-    "http://sorfi.org/*",
-    "notifications",
-    "storage"
-  ],
-  "browser_action":
-  {
-    "default_popup": "sf-ch.html",
-    "default_icon": "icons/sf-ch-icon19.png",
-    "default_title": "Sorozat figyel\u0151"
+  "options_page": "src/sorfi-webextensions-options.html",
+  "browser_action": {
+    "default_icon": "assets/sorfi-webextensions-icon19.png",
+    "default_title": "Sorozat figyelő",
+    "default_popup": "src/sorfi-webextensions-popup.html"
   },
+  "permissions": [
+    "notifications",
+    "storage",
+    "https://sorfi.org/"
+  ],
   "omnibox": {
     "keyword": "sf"
   }
