@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="resist">
+	<title>Beállítások - Sorozat figyelő kiterjesztés</title>
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet">
+	<script src="sf-ch-opt.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a></h1>
+		<p>
+			A kiterjesztés használatához <a href="https://sorfi.org" target="_blank">Sorozat figyelő</a> fiók szükséges.
+		</p>
+		<p>
+			A böngésző kiterjesztés dokumentációja elérhető itt: <a href="https://sorfi.org/dokumentacio/appok" target="_blank">sorfi.org/dokumentacio/appok</a>
+		</p>
+		<p>
+			A követett sorozatokat a <a href="https://sorfi.org" target="_blank">Sorozat figyelőn</a> tudod beállítani.
+		</p>
+		<form role="form" id="options">
+
+			<div class="form-group">
+				<label for="nptUkp">API kulcs</label>
+				<input type="text" id="nptKp" name="nptUkp" maxlength="14" class="form-control">
+				<p class="form-text text-muted">
+					Ez egy 14 jegyű karaktersor, nem a jelszavad.
+					A Sorozat figyelőn a <a href="https://sorfi.org/settings#apikeys" target="_blank">Beállítások oldal alján</a> találod meg.
+				</p>
+			</div>
+			<!--<div class="checkbox">
+                <label>
+                    <input type="checkbox" id="nptSub" name="nptSub"> Felirat értesítő kikapcsolása
+                </label>
+            </div>-->
+		</form>
+	</div>
+
+	<div id="footer">
+		<div class="container">
+			<p class="text-muted">&copy; 2018 resist, Speeder</p>
+		</div>
+	</div>
+</body>
+</html>
