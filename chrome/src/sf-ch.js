@@ -1,6 +1,6 @@
 ﻿$(function ()
 {
-	$('#footer').append('<small><a href="' + chrome.extension.getURL("sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small> ');
+	$('#footer').append('<small><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small> ');
 });
 
 // Downloaded/Watched button handler
