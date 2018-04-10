@@ -1,5 +1,14 @@
 ﻿$(function ()
 {
+	// If the content cache is from the last hour, instantly display the content
+	if (localStorage.contentCache && localStorage.contentCacheTS)
+	{
+		var oldestTS = Date.now();
+		oldestTS = oldestTS - 3600 * 1000;
+		if (oldestTS < localStorage.contentCacheTS)
+			$('#sfdata').html(localStorage.contentCache);
+	}
+	// Display the footer link to the settings page
 	$('#footer').append('<small><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small> ');
 });
 
@@ -153,6 +162,10 @@ function onResponse(req)
 		if (row)
 			sfdata.append(row);
 	}
+
+	// Save the html content in the local cache for faster display next time
+	localStorage.contentCache = sfdata.html();
+	localStorage.contentCacheTS = Date.now();
 
 	// Sign up for image click events on all buttons
 	for (let img of document.querySelectorAll('img.lnkbtn'))

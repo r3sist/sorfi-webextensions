@@ -1,6 +1,6 @@
 # sorfi-webextensions
 
-**Browser extension for sorfi.org, using webextension API via Chrome/Firefox**
+**Browser extension for sorfi.org, using webextension API via Chrome/Firefox/Opera**
 
 (c) 2018 ![bV](https://structure.hu/img/bV.png)  
 https://resist.hu | https://sorfi.org
@@ -25,8 +25,13 @@ For more details visit wiki: https://sorfi.org/dokumentacio/appok
 
 ## Builds
 
-+ Chrome extension is available in Chrome Web Store: https://chrome.google.com/webstore/detail/sorozat-figyel%C5%91-felirat-%C3%A9/lahojbgffaeejkoajepnbokllomnpbnk?hl=hu 
-+ Firefox extension is available at Firefox Extensions: https://addons.mozilla.org/hu/firefox/addon/sorozat-figyel%C5%91-felirat/
++ https://bitbucket.org/resist/sf-webextensions/addon/com.releasebucket/releases
+
+## Distributions
+
+[![Chrome](https://sorfi.org/assets/img/badge/chrome.png)](https://chrome.google.com/webstore/detail/sorozat-figyel%C5%91-felirat-%C3%A9/lahojbgffaeejkoajepnbokllomnpbnk?hl=hu)
+
+[![Firefox](https://sorfi.org/assets/img/badge/ff.png)](https://addons.mozilla.org/hu/firefox/addon/sorozat-figyel%C5%91-felirat/)
 
 ## License
 
