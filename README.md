@@ -33,6 +33,8 @@ For more details visit wiki: https://sorfi.org/dokumentacio/appok
 
 [![Firefox](https://sorfi.org/assets/img/badge/ff.png)](https://addons.mozilla.org/hu/firefox/addon/sorozat-figyel%C5%91-felirat/)
 
+[![Opera](https://sorfi.org/assets/img/badge/opera.png)](https://addons.opera.com/hu/extensions/details/sorozat-figyelo/)
+
 ## License
 
 Proprietary, All Rights Reserved.
