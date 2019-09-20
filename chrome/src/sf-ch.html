@@ -4,24 +4,43 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="author" content="resist">
-	<title>Sorozat figyelő kiterjesztés</title>
+	<title>Sorozat figyelő felirat értesítő</title>
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
-	<link href="../css/style.css" rel="stylesheet">
-	<script src="jquery/jquery.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
 	<script src="sf-ch.js"></script>
-	<style>
-		body {
-			min-width: 600px;
-			overflow-x: hidden;
-		}
-	</style>
 </head>
 <body>
-	<div class="container-fluid">
-		<h1><a href="http://sorfi.org" target="_blank">Sorozat figyelő</a></h1>
-		<div id="sfdata"><p class="muted">Szinkronizálás...<br /><small>Ha nem töltődik be az oldal, ellenőrizd a fiók adataid!</small></p></div>
-		<div id="footer" class="rowspan"><br><small>&copy; 2018 resist, Speeder</small> </div>
+<style>
+	body {
+		min-width: 500px;
+	}
+
+	.lnkbtn, .btn-lnk {
+		cursor: pointer;
+	}
+
+	h1 {
+		font-size: 1.5rem;
+	}
+</style>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-uppercase"><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a>  <small class="text-muted">// összefoglaló nézet</small></h1>
+		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-12" id="sfdata">
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12 text-muted c-footer">
+			<small>&copy; 2019 resist, Speeder</small>
+		</div>
+	</div>
+</div>
 </body>
 </html>
-

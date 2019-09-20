@@ -2,14 +2,12 @@
 
 **Browser extension for sorfi.org, using webextension API via Chrome/Firefox/Opera**
 
-(c) 2018 ![bV](https://structure.hu/img/bV.png)  
-https://resist.hu | https://sorfi.org
+(c) 2019 ![bV](https://structure.hu/img/bV.png)  
+https://sorfi.org
 
 (c) 2018 Speeder
 
 ## Development
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/58846f71df604c40932e539a783863c7)](https://www.codacy.com/app/resist/sf-webextensions?utm_source=resist@bitbucket.org&amp;utm_medium=referral&amp;utm_content=resist/sf-webextensions&amp;utm_campaign=Badge_Grade)
 
 + **Repository:** https://bitbucket.org/resist/sf-webextensions
 + **Issue tracker:** [https://bitbucket.org/resist/sf-webextensions/issues](https://bitbucket.org/resist/sf-webextensions/issues?status=new&status=open)

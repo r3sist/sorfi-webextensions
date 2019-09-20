@@ -6,5 +6,6 @@ window.addEventListener('load', function() {
     // Save settings
     options.nptKp.onchange = function() {
         localStorage.keypass = options.nptKp.value;
+        $('.c-console').html('Automatikusan mentve.');
     };
 });

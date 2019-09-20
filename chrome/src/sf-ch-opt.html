@@ -4,45 +4,42 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="author" content="resist">
-	<title>Beállítások - Sorozat figyelő kiterjesztés</title>
+	<title>Beállítások | Sorozat figyelő felirat értesítő</title>
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
-	<link href="../css/style.css" rel="stylesheet">
+	<script src="../js/jquery.min.js"></script>
 	<script src="sf-ch-opt.js"></script>
 </head>
 <body>
-	<div class="container">
-		<h1><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a></h1>
-		<p>
-			A kiterjesztés használatához <a href="https://sorfi.org" target="_blank">Sorozat figyelő</a> fiók szükséges.
-		</p>
-		<p>
-			A böngésző kiterjesztés dokumentációja elérhető itt: <a href="https://sorfi.org/dokumentacio/appok" target="_blank">sorfi.org/dokumentacio/appok</a>
-		</p>
-		<p>
-			A követett sorozatokat a <a href="https://sorfi.org" target="_blank">Sorozat figyelőn</a> tudod beállítani.
-		</p>
-		<form role="form" id="options">
-
-			<div class="form-group">
-				<label for="nptUkp">API kulcs</label>
-				<input type="text" id="nptKp" name="nptUkp" maxlength="14" class="form-control">
-				<p class="form-text text-muted">
-					Ez egy 14 jegyű karaktersor, nem a jelszavad.
-					A Sorozat figyelőn a <a href="https://sorfi.org/settings#apikeys" target="_blank">Beállítások oldal alján</a> találod meg.
-				</p>
-			</div>
-			<!--<div class="checkbox">
-                <label>
-                    <input type="checkbox" id="nptSub" name="nptSub"> Felirat értesítő kikapcsolása
-                </label>
-            </div>-->
-		</form>
-	</div>
-
-	<div id="footer">
-		<div class="container">
-			<p class="text-muted">&copy; 2018 resist, Speeder</p>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-uppercase"><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a> <small class="text-muted">// beállítások</small></h1>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<p>
+				A kiterjesztés használatához <a href="https://sorfi.org" target="_blank">Sorozat figyelő</a> fiók szükséges. A követett sorozatokat az opldalon tudod beállítani.
+			</p>
+
+			<form role="form" id="options">
+				<div class="form-group">
+					<label for="nptKp">API kulcs:</label>
+					<input type="text" id="nptKp" name="nptKp" maxlength="14" class="form-control">
+					<p class="form-text text-muted">
+						Ez egy 14 jegyű karaktersor, nem a jelszavad!
+						A Sorozat figyelőn a <a href="https://sorfi.org/settings#apikeys" target="_blank">Beállítások oldal alján</a> találod meg.
+					</p>
+				</div>
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="nptSub" name="nptSub">
+					<label class="form-check-label" for="nptSub">Felirat értesítő kikapcsolása</label>
+				</div>
+				<p class="c-console text-success text-small"></p>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

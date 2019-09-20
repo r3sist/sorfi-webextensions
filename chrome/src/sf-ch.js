@@ -9,7 +9,7 @@
 			$('#sfdata').html(localStorage.contentCache);
 	}
 	// Display the footer link to the settings page
-	$('#footer').append('<small><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small> ');
+	$('.c-footer').append('<small class="ml-3"><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small>');
 });
 
 // Downloaded/Watched button handler
@@ -84,7 +84,7 @@ function formattedDate(data)
 	var d = date.getDate();
 	var dn = weekday[date.getDay()];
 
-	return m + '.' + d + '. ' + dn;
+	return m + '.' + d + '.<br>' + dn;
 }
 
 // Returns formatted HTML content for an episode
@@ -103,38 +103,41 @@ function formattedEpisode(data)
 		return null;
 
 	var muted = '';
+	var border = ' border border-success'
 	var pb = '';
 	var hunsub = '';
 	var downloaded = '';
 	var watched = '';
-	if (ep['inair'] == 1)
-	{
+	if (ep['inair'] == 1) {
 		pb = '<a href="https://thepiratebay.org/search/' + encodeURI(series['stitle']) + '%20S' + lpad(ep['ese']) +
 			'E' + lpad(ep['eep']) +
 			'/0/99/0" target="_blank"><img src="../icons/pb.png" alt="P" title="Piratebay"/></a>';
+		pb = "";
 		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'downloaded.png' : 'undownloaded.png') + '" alt="D" title="' +
-			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
+			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ml-2 lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
 		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'watched.png' : 'unwatched.png') + '" alt="W" title="' +
-			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="lnkbtn" id="w,' + ep['eid'] + ',' + ep['sid'] +
+			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="ml-2 lnkbtn" id="w,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
 		hunsub = ep['ehashunsub'] == 1 ?
-			'<img src="../icons/sub.png" alt="Sub" title="Van magyar felirat">' :
-			'<img src="../icons/nosub.png" alt="NSub" title="Nincs magyar felirat">';
-	}
-	else
+			'<img src="../icons/sub.png" alt="Sub" title="Van magyar felirat" class="ml-2">' :
+			'<img src="../icons/nosub.png" alt="NSub" title="Nincs magyar felirat" class="ml-2">';
+	} else {
 		muted = ' text-muted';
+		border = '';
+	}
+
 
 	// Return full content
-	return '<div class="rowspan' + muted + '">\
-			<div class="datespan">\
-			' + formattedDate(ep) + '\
-			</div>\
-			<div class="textspan">\
-			<a href="http://sorfi.org/sorozat/' + series['sname'] + '" target="_blank" class="' + muted + '">' +
-				series['stitle'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a> <small class="muted">' + ep['etitle'] + '</small>\
-			</div>\
-			<div class="subspan">' + pb + hunsub + downloaded + watched + '</div>\
+	return '<div class="row' + muted + border + ' background-light rounded mx-1 my-1" style="line-height: 1rem; background-color: #efefef">\
+				<div class="col-2 text-center align-content-center py-2">\
+					<small class="text-right">' + formattedDate(ep) + '</small>\
+				</div>\
+				<div class="col-6 py-2">\
+					<a href="http://sorfi.org/sorozat/' + series['sname'] + '" target="_blank" class="font-weight-bold text-success' + muted + '">' +
+						series['stitle'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
+				</div>\
+				<div class="col-4 py-2 text-right">' + pb + hunsub + downloaded + watched + '</div>\
 			</div>';
 }
 
@@ -149,7 +152,7 @@ function onResponse(req)
 
 	if (req.status != 200)
 	{
-		sfdata.html('<p>Hiba történt. Ha nem töltődik be az oldal, ellenőrizd a fiók adataid!</p>');
+		sfdata.html("<p class=\"text-danger text-small\">Szinkronizálás...<br>Ha nem töltődik be az oldal, ellenőrizd a fiók adataid!</p>");
 		return;
 	}
 
