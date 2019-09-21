@@ -104,15 +104,16 @@ function formattedEpisode(data)
 
 	var muted = '';
 	var border = ' border border-success'
-	var pb = '';
+	var pb0 = '';
+	var pb1 = '';
+	var pb2 = '';
 	var hunsub = '';
 	var downloaded = '';
 	var watched = '';
 	if (ep['inair'] == 1) {
-		pb = '<a href="https://thepiratebay.org/search/' + encodeURI(series['stitle']) + '%20S' + lpad(ep['ese']) +
-			'E' + lpad(ep['eep']) +
-			'/0/99/0" target="_blank"><img src="../icons/pb.png" alt="P" title="Piratebay"/></a>';
-		pb = "";
+		pb0 = (ep['externalUrls'][0])?'<a href="' + ep['externalUrls'][0] + '">1</a> ':'';
+		pb1 = (ep['externalUrls'][1])?'<a href="' + ep['externalUrls'][1] + '">2</a> ':'';
+		pb2 = (ep['externalUrls'][2])?'<a href="' + ep['externalUrls'][2] + '">3</a> ':'';
 		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'downloaded.png' : 'undownloaded.png') + '" alt="D" title="' +
 			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ml-2 lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
@@ -137,7 +138,7 @@ function formattedEpisode(data)
 					<a href="http://sorfi.org/sorozat/' + series['sname'] + '" target="_blank" class="font-weight-bold text-success' + muted + '">' +
 						series['stitle'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
 				</div>\
-				<div class="col-4 py-2 text-right">' + pb + hunsub + downloaded + watched + '</div>\
+				<div class="col-4 py-2 text-right">' + pb0 + pb1 + pb2 + hunsub + downloaded + watched + '</div>\
 			</div>';
 }
 
