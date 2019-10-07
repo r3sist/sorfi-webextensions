@@ -9,7 +9,7 @@
 			$('#sfdata').html(localStorage.contentCache);
 	}
 	// Display the footer link to the settings page
-	$('.c-footer').append('<small class="ml-3"><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Fiók beállítások</a></small>');
+	$('.c-footer').append('<small class="ml-3"><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Beállítások</a></small>');
 });
 
 // Downloaded/Watched button handler
@@ -111,9 +111,15 @@ function formattedEpisode(data)
 	var downloaded = '';
 	var watched = '';
 	if (ep['inair'] == 1) {
-		pb0 = (ep['externalUrls'][0])?'<a href="' + ep['externalUrls'][0] + '">1</a> ':'';
-		pb1 = (ep['externalUrls'][1])?'<a href="' + ep['externalUrls'][1] + '">2</a> ':'';
-		pb2 = (ep['externalUrls'][2])?'<a href="' + ep['externalUrls'][2] + '">3</a> ':'';
+		if (typeof ep['externalUrls'] !== 'undefined') {
+			pb0 = (ep['externalUrls'][0]) ? '<a href="' + ep['externalUrls'][0] + '" class="text-primary">#</a> ' : '';
+		}
+		if (typeof ep['externalUrls'] !== 'undefined') {
+			pb1 = (ep['externalUrls'][1]) ? '<a href="' + ep['externalUrls'][1] + '" class="text-dark">#</a> ' : '';
+		}
+		if (typeof ep['externalUrls'] !== 'undefined') {
+			pb2 = (ep['externalUrls'][2]) ? '<a href="' + ep['externalUrls'][2] + '" class="text-warning">#</a> ' : '';
+		}
 		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'downloaded.png' : 'undownloaded.png') + '" alt="D" title="' +
 			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ml-2 lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
@@ -134,11 +140,11 @@ function formattedEpisode(data)
 				<div class="col-2 text-center align-content-center py-2">\
 					<small class="text-right">' + formattedDate(ep) + '</small>\
 				</div>\
-				<div class="col-6 py-2">\
+				<div class="col-10 py-2">\
+					<span class="float-right py-2 text-right">' + pb0 + pb1 + pb2 + hunsub + downloaded + watched + '</span>\
 					<a href="http://sorfi.org/sorozat/' + series['sname'] + '" target="_blank" class="font-weight-bold text-success' + muted + '">' +
 						series['stitle'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
 				</div>\
-				<div class="col-4 py-2 text-right">' + pb0 + pb1 + pb2 + hunsub + downloaded + watched + '</div>\
 			</div>';
 }
 
