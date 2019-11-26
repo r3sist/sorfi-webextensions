@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" style="width: 600px; height: 600px;min-width: 600px; min-height: 600px;padding:0;margin:0">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,38 +8,34 @@
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<script src="../js/jquery.min.js"></script>
 	<script src="sf-ch.js"></script>
+	<style>
+		.lnkbtn, .btn-lnk {
+			cursor: pointer;
+		}
+
+		h1 {
+			font-size: 1.5rem;
+		}
+	</style>
 </head>
-<body>
-<style>
-	body {
-		min-width: 500px;
-	}
+	<body style="width: 600px; height: 600px;min-width: 600px; min-height: 600px; overflow-x: hidden" class="">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<h1 class="text-uppercase"><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a>  <small class="text-muted">// összefoglaló nézet</small></h1>
+				</div>
+			</div>
 
-	.lnkbtn, .btn-lnk {
-		cursor: pointer;
-	}
+			<div class="row">
+				<div class="col-12" id="sfdata">
 
-	h1 {
-		font-size: 1.5rem;
-	}
-</style>
-<div class="container">
-	<div class="row">
-		<div class="col-12">
-			<h1 class="text-uppercase"><a href="https://sorfi.org" target="_blank">Sorozat figyelő</a>  <small class="text-muted">// összefoglaló nézet</small></h1>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12 text-muted c-footer">
+				</div>
+			</div>
 		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-12" id="sfdata">
-
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-12 text-muted c-footer">
-		</div>
-	</div>
-</div>
-</body>
+	</body>
 </html>
