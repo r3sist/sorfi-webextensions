@@ -32,24 +32,24 @@ function toggleAPI(source)
 	// Determine needed operation and if successful the image to set the button to
 	if (op == 'dl')
 	{
-		if (source.src.indexOf("undownloaded") == -1)
+		if (source.src.indexOf("sorfiDown0") == -1)
 		{
 			op = 'xdl';
-			src = '../icons/undownloaded.png';
+			src = '../icons/sorfiDown0.svg';
 		}
 		else
-			src = '../icons/downloaded.png';
+			src = '../icons/sorfiDown1.svg';
 	}
 	else if (op == 'w')
 	{
 		needCounterUpdate = true;
-		if (source.src.indexOf("unwatched") == -1)
+		if (source.src.indexOf("sorfiCross") == -1)
 		{
 			op = 'xw';
-			src = '../icons/unwatched.png';
+			src = '../icons/sorfiCross.svg';
 		}
 		else
-			src = '../icons/watched.png';
+			src = '../icons/sorfiCheck.svg';
 	}
 	else
 		return;
@@ -127,15 +127,15 @@ function formattedEpisode(data)
 		if (typeof ep['externalUrls'] !== 'undefined') {
 			pb2 = (ep['externalUrls'][2]) ? '<a href="' + ep['externalUrls'][2] + '" class="text-warning">#</a> ' : '';
 		}
-		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'downloaded.png' : 'undownloaded.png') + '" alt="D" title="' +
+		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'sorfiDown1.svg' : 'sorfiDown0.svg') + '" style="width:1.5rem;height:1.5rem;" alt="D" title="' +
 			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ml-2 lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
-		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'watched.png' : 'unwatched.png') + '" alt="W" title="' +
+		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'sorfiCheck.svg' : 'sorfiCross.svg') + '" style="width:1.5rem;height:1.5rem;" alt="W" title="' +
 			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="ml-2 lnkbtn" id="w,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
 		hunsub = ep['ehashunsub'] == 1 ?
-			'<img src="../icons/sub.png" alt="Sub" title="Van magyar felirat" class="ml-2">' :
-			'<img src="../icons/nosub.png" alt="NSub" title="Nincs magyar felirat" class="ml-2">';
+			'<img src="../icons/sub.svg" alt="Sub" style="width:1.5rem;height:1.5rem;" title="Van magyar felirat" class="ml-2">' :
+			'<img src="../icons/nosub.svg" alt="NSub" style="width:1.5rem;height:1.5rem;" title="Nincs magyar felirat" class="ml-2">';
 	} else {
 		muted = ' text-muted';
 		border = '';
