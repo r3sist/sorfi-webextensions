@@ -10,6 +10,13 @@
 	}
 	// Display the footer link to the settings page
 	$('.c-footer').append('<small class="ml-3"><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Beállítások</a></small>');
+    
+        var night = JSON.parse(localStorage.getItem('night'));
+        if (night == true) {
+            $('head').prepend('<link href="../css/bootstrap-dark.min.css" rel="stylesheet">');
+        } else {
+            $('head').prepend('<link href="../css/bootstrap.min.css" rel="stylesheet">');
+        }
 });
 
 // Downloaded/Watched button handler
@@ -133,10 +140,11 @@ function formattedEpisode(data)
 		muted = ' text-muted';
 		border = '';
 	}
-
+    
+        
 
 	// Return full content
-	return '<div class="row' + muted + border + ' background-light rounded mx-1 my-1" style="line-height: 1rem; background-color: #efefef">\
+	return '<div class="row bg-light' + muted + border + ' rounded mx-1 my-1" style="line-height: 1rem;">\
 				<div class="col-2 text-center align-content-center py-2">\
 					<small class="text-right">' + formattedDate(ep) + '</small>\
 				</div>\
@@ -180,6 +188,11 @@ function onResponse(req)
 	// Sign up for image click events on all buttons
 	for (let img of document.querySelectorAll('img.lnkbtn'))
 		img.addEventListener('click', function () { toggleAPI(img); });
+    
+    var night = JSON.parse(localStorage.getItem('night'));
+    if (night == true) {
+        $('#sfdata .row').toggleClass('bg-dark bg-light');
+    }
 }
 
 // Main function upon opening the dropdown window
