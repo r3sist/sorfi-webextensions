@@ -104,7 +104,7 @@ function formattedEpisode(data)
 	}
 
 	var ep = data;
-	var series = ep['sdata'];
+	var series = ep['show'];
 
 	if (ep['w'] == 1)
 		return null;
@@ -150,8 +150,8 @@ function formattedEpisode(data)
 				</div>\
 				<div class="col-10 py-2">\
 					<span class="float-right py-2 text-right">' + pb0 + pb1 + pb2 + hunsub + downloaded + watched + '</span>\
-					<a href="http://sorfi.org/sorozat/' + series['sname'] + '" target="_blank" class="font-weight-bold text-success' + muted + '">' +
-						series['stitle'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
+					<a href="http://sorfi.org/sorozat/' + series['name'] + '" target="_blank" class="font-weight-bold text-success' + muted + '">' +
+						series['title'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
 				</div>\
 			</div>';
 }
