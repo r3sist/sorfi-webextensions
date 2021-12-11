@@ -27,11 +27,9 @@ For more details visit wiki: https://sorfi.org/dokumentacio/appok
 
 ## Distributions in web stores
 
-[![Chrome](https://sorfi.org/assets/img/badge/chrome.png)](https://chrome.google.com/webstore/detail/sorozat-figyel%C5%91-felirat-%C3%A9/lahojbgffaeejkoajepnbokllomnpbnk?hl=hu)
-
-[![Firefox](https://sorfi.org/assets/img/badge/ff.png)](https://addons.mozilla.org/hu/firefox/addon/sorozat-figyel%C5%91-felirat/)
-
-[![Opera](https://sorfi.org/assets/img/badge/opera.png)](https://addons.opera.com/hu/extensions/details/sorozat-figyelo/)
++ [Chrome](https://chrome.google.com/webstore/detail/sorozat-figyel%C5%91-felirat-%C3%A9/lahojbgffaeejkoajepnbokllomnpbnk?hl=hu) ([dev](https://chrome.google.com/webstore/devconsole/))
++ [Firefox](https://addons.mozilla.org/hu/firefox/addon/sorozat-figyel%C5%91-felirat/) ([dev](https://addons.mozilla.org/hu/developers/addon/sorozat-figyel%C5%91-felirat/versions/submit/))
++ [Opera](https://addons.opera.com/hu/extensions/details/sorozat-figyelo/) ([dev](https://addons.opera.com/developer/package/124475/?tab=versions))
 
 ## License
 

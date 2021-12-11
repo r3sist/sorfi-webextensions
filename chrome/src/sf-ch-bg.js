@@ -11,7 +11,8 @@ var lastAvailableCount = 0;
 // Update Counter
 function updateCount(hint = 0)
 {
-	chrome.browserAction.setBadgeBackgroundColor({ color: [250, 0, 0, 230] });
+	chrome.browserAction.setBadgeBackgroundColor({ color: "#e3423e" });
+	chrome.browserAction.setBadgeTextColor({ color: "#ffffff" });
 	if (hint)
 		chrome.browserAction.setBadgeText({ text: (lastAvailableCount + hint).toString() });
 
