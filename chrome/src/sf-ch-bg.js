@@ -12,7 +12,7 @@ var lastAvailableCount = 0;
 function updateCount(hint = 0)
 {
 	chrome.browserAction.setBadgeBackgroundColor({ color: "#e3423e" });
-	chrome.browserAction.setBadgeTextColor({ color: "#ffffff" });
+	// chrome.browserAction.setBadgeTextColor({ color: "#ffffff" }); // Firefox only: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/setBadgeTextColor
 	if (hint)
 		chrome.browserAction.setBadgeText({ text: (lastAvailableCount + hint).toString() });
 
