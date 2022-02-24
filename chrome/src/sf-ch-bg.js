@@ -31,7 +31,9 @@ function updateCount(hint = 0)
 				++availableCount;
 
 		lastAvailableCount = availableCount;
-		chrome.browserAction.setBadgeText({ text: availableCount.toString() });
+        if (availableCount > 0) {
+            chrome.browserAction.setBadgeText({ text: availableCount.toString() });
+        }
 	};
 	req.send();
 }
