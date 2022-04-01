@@ -127,15 +127,15 @@ function formattedEpisode(data)
 		if (typeof ep['externalUrls'] !== 'undefined') {
 			pb2 = (ep['externalUrls'][2]) ? '<a href="' + ep['externalUrls'][2] + '" class="text-warning">#</a> ' : '';
 		}
-		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'sorfiDown1.svg' : 'sorfiDown0.svg') + '" style="width:1.5rem;height:1.5rem;" alt="D" title="' +
-			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ms-2 lnkbtn" id="dl,' + ep['eid'] + ',' + ep['sid'] +
+		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'sorfiDown1.svg' : 'sorfiDown0.svg') + '" alt="D" title="' +
+			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ms-2 btn-sfw" id="dl,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
-		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'sorfiCheck.svg' : 'sorfiCross.svg') + '" style="width:1.5rem;height:1.5rem;" alt="W" title="' +
-			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="ms-2 lnkbtn" id="w,' + ep['eid'] + ',' + ep['sid'] +
+		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'sorfiCheck.svg' : 'sorfiCross.svg') + '" alt="W" title="' +
+			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="ms-2 btn-sfw" id="w,' + ep['eid'] + ',' + ep['sid'] +
 			'"/>';
 		hunsub = ep['ehashunsub'] == 1 ?
-			'<img src="../icons/sub.svg" alt="Sub" style="width:1.5rem;height:1.5rem;" title="Van magyar felirat" class="ms-2">' :
-			'<img src="../icons/nosub.svg" alt="NSub" style="width:1.5rem;height:1.5rem;" title="Nincs magyar felirat" class="ms-2">';
+			'<img src="../icons/sub.svg" alt="Sub" title="Van magyar felirat" class="ms-2 btn-sfw">' :
+			'<img src="../icons/nosub.svg" alt="NSub" title="Nincs magyar felirat" class="ms-2 btn-sfw">';
 	} else {
 		muted = ' text-muted';
 		border = '';
