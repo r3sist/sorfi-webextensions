@@ -1,6 +1,6 @@
 const baseUrl = "https://sf10.sorfi.org/";
 const counterUpdatesInMilliseconds = 600000; // 10 minutes
-const subtitleCheckingInMilliseconds = 10000; // 10 minutes
+const subtitleCheckingInMilliseconds = 600000; // 10 minutes
 
 // Prepare Local Storage
 if (!localStorage.getItem("isInitialized"))
