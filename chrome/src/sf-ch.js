@@ -1,206 +1,184 @@
-﻿$(function ()
-{
+﻿const baseUrl = "https://sf10.sorfi.org/";
+
+window.addEventListener('load', function() {
 	// If the content cache is from the last hour, instantly display the content
 	if (localStorage.contentCache && localStorage.contentCacheTS)
 	{
-		var oldestTS = Date.now();
+		let oldestTS = Date.now();
 		oldestTS = oldestTS - 3600 * 1000;
 		if (oldestTS < localStorage.contentCacheTS)
-			$('#sfdata').html(localStorage.contentCache);
+			document.getElementById("sfdata").insertAdjacentHTML("afterbegin", localStorage.getItem("contentCache"));
 	}
 	// Display the footer link to the settings page
-	$('.c-footer').append('<small class="ms-3"><a href="' + chrome.extension.getURL("src/sf-ch-opt.html") + '" target="_blank">Beállítások</a></small>');
-    
-        var night = JSON.parse(localStorage.getItem('night'));
-        if (night == true) {
-            $('head').prepend('<link href="../css/sorfi-bootstrap-chrome-dark.css" rel="stylesheet">');
-        } else {
-            $('head').prepend('<link href="../css/sorfi-bootstrap-chrome.css" rel="stylesheet">');
-        }
+	document.getElementById("footer").insertAdjacentHTML('afterbegin', `<small class=""><a href="${chrome.extension.getURL("src/sf-ch-opt.html")}" target="_blank">Beállítások</a></small>`);
+
+	const night = JSON.parse(localStorage.getItem('night'));
+	if (night === true) {
+		document.querySelector("head").insertAdjacentHTML("afterbegin", `<link href="../css/sorfi-bootstrap-chrome-dark.css" rel="stylesheet">`);
+	} else {
+		document.querySelector("head").insertAdjacentHTML("afterbegin", `<link href="../css/sorfi-bootstrap-chrome.css" rel="stylesheet">`);
+	}
 });
 
 // Downloaded/Watched button handler
-function toggleAPI(source)
+function toggleButtonAction(element)
 {
-	args = source.id.split(',');
-	op = args[0];
-	eid = args[1];
-	sid = args[2];
-	src = '';
-	needCounterUpdate = false;
+	let action = element.getAttribute("data-action");
+	let episodeId = element.getAttribute("data-episode-id")
+	let programmeId = element.getAttribute("data-programme-id");
+	let newImageSrc = '';
+	let needCounterUpdate = false;
 
 	// Determine needed operation and if successful the image to set the button to
-	if (op == 'dl')
-	{
-		if (source.src.indexOf("sorfiDown0") == -1)
-		{
-			op = 'xdl';
-			src = '../icons/sorfiDown0.svg';
+	if (action === "d" || action === "xd") {
+		if (element.src.indexOf("xd") == -1) {
+			action = "xd";
+			newImageSrc = "../icons/xd.svg";
+		} else {
+			action = "d";
+			newImageSrc = "../icons/d.svg";
 		}
-		else
-			src = '../icons/sorfiDown1.svg';
-	}
-	else if (op == 'w')
-	{
+	} else if (action === "w") {
 		needCounterUpdate = true;
-		if (source.src.indexOf("sorfiCross") == -1)
-		{
-			op = 'xw';
-			src = '../icons/sorfiCross.svg';
+		if (element.src.indexOf("xw") == -1) {
+			action = "xw";
+			newImageSrc = "../icons/xw.svg";
+		} else {
+			action = "w";
+			newImageSrc = "../icons/w.svg";
 		}
-		else
-			src = '../icons/sorfiCheck.svg';
 	}
-	else
+	else {
 		return;
+	}
 
 	// Send the request
-	var req = new XMLHttpRequest();
-	req.open("GET", 'https://sorfi.org/api/set/ep/' + eid + '/' + sid + '/' + op + '/' + localStorage.keypass, true);
-	req.onreadystatechange = function ()
-	{
-		if (req.readyState != 4 || req.status != 200)
+	const req = new XMLHttpRequest();
+	req.open("POST", `${baseUrl}api/mark/${action}/${programmeId}/${episodeId}/${localStorage.keypass}`, true);
+	req.onreadystatechange = function () {
+		if (req.readyState !== 4 || req.status !== 200) {
 			return;
+		}
 
-		source.src = src;
+		element.setAttribute("src", newImageSrc);
 
 		// Message the background script to update the episode counter
 		if (needCounterUpdate)
 			chrome.runtime.sendMessage({
 				action: 'requestUpdateCount',
-				counterAdjust: op == 'w' ? -1 : 1
+				counterAdjust: action === 'w' ? -1 : 1
 			});
 	};
 	req.send();
 }
 
-// Return a formatted date displayed for an episode
-function formattedDate(data)
-{
-	var weekday = new Array(7);
-	weekday[0] = "Vasárnap";
-	weekday[1] = "Hétfő";
-	weekday[2] = "Kedd";
-	weekday[3] = "Szerda";
-	weekday[4] = "Csütörtök";
-	weekday[5] = "Péntek";
-	weekday[6] = "Szombat";
-
-	var date = new Date(data['eairtime'] * 1000);
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
-	var dn = weekday[date.getDay()];
-
-	return m + '.' + d + '.<br>' + dn;
-}
-
 // Returns formatted HTML content for an episode
-function formattedEpisode(data)
+function renderEpisodeRow(episode)
 {
-	function lpad(num)
-	{
-		var s = "0" + num;
-		return s.substr(s.length - 2);
+	if (episode["markedAsWatched"]) {
+		return;
 	}
 
-	var ep = data;
-	var series = ep['show'];
+	let bgClass = "bg-light";
+	const night = JSON.parse(localStorage.getItem('night'));
+	if (night === true) {
+		bgClass = "bg-dark";
+	}
 
-	if (ep['w'] == 1)
-		return null;
+	let mutedClass = '';
+	let border = 'border border-success';
+	let searchLinks = '';
+	let subtitleButton = '';
+	let downloadButton = '';
+	let watchButton = '';
+	if (episode['isAired']) {
+		watchButton = `<img src="../icons/xw.svg" alt="W" title="Nincs megnézve" class="c-button ms-1 btn-sfw" data-programme-id="${episode["programmeId"]}" data-episode-id="${episode["id"]}" data-action="w">`;
+		if (episode["markedAsDownloaded"] === 0 || episode["markedAsDownloaded"] === 1)
+		downloadButton = `<img src="../icons/${episode['markedAsDownloaded'] ? 'd' : 'xd'}.svg" alt="D" title="${episode['markedAsDownloaded'] ? 'Letöltve' : 'Nincs letöltve'}" class="c-button ms-1 btn-sfw" data-programme-id="${episode["programmeId"]}" data-episode-id="${episode["id"]}" data-action="${episode['markedAsDownloaded'] ? 'xd' : 'd'}">`;
 
-	var muted = '';
-	var border = ' border border-success'
-	var pb0 = '';
-	var pb1 = '';
-	var pb2 = '';
-	var hunsub = '';
-	var downloaded = '';
-	var watched = '';
-	if (ep['inair'] == 1) {
-		if (typeof ep['externalUrls'] !== 'undefined') {
-			pb0 = (ep['externalUrls'][0]) ? '<a href="' + ep['externalUrls'][0] + '" class="text-primary">#</a> ' : '';
+		if (typeof episode['customLinksHtml'] !== "undefined" && episode['customLinksHtml'] !== "") {
+			searchLinks = episode['customLinksHtml'];
 		}
-		if (typeof ep['externalUrls'] !== 'undefined') {
-			pb1 = (ep['externalUrls'][1]) ? '<a href="' + ep['externalUrls'][1] + '" class="text-danger">#</a> ' : '';
+
+		if (episode["hasEnglishSubtitle"]) {
+			subtitleButton = '<img src="../icons/enSub.svg" alt="EnSub" title="Van angol felirat" class="ms-1 btn-sfw">';
 		}
-		if (typeof ep['externalUrls'] !== 'undefined') {
-			pb2 = (ep['externalUrls'][2]) ? '<a href="' + ep['externalUrls'][2] + '" class="text-warning">#</a> ' : '';
+
+		if (episode["hasHungarianSubtitle"]) {
+			subtitleButton = '<img src="../icons/hunSub.svg" alt="HunSub" title="Van magyar felirat" class="ms-1 btn-sfw">';
 		}
-		downloaded = '<img src="../icons/' + (ep['dl'] == 1 ? 'sorfiDown1.svg' : 'sorfiDown0.svg') + '" alt="D" title="' +
-			(ep['dl'] == 1 ? 'Letöltve' : 'Nincs letöltve') + '" class="ms-2 btn-sfw" id="dl,' + ep['eid'] + ',' + ep['sid'] +
-			'"/>';
-		watched = '<img src="../icons/' + (ep['w'] == 1 ? 'sorfiCheck.svg' : 'sorfiCross.svg') + '" alt="W" title="' +
-			(ep['w'] == 1 ? 'Megnézve' : 'Nincs megnézve') + '" class="ms-2 btn-sfw" id="w,' + ep['eid'] + ',' + ep['sid'] +
-			'"/>';
-		hunsub = ep['ehashunsub'] == 1 ?
-			'<img src="../icons/sub.svg" alt="Sub" title="Van magyar felirat" class="ms-2 btn-sfw">' :
-			'<img src="../icons/nosub.svg" alt="NSub" title="Nincs magyar felirat" class="ms-2 btn-sfw">';
+
+		if (episode["hasHungarianSubtitle"] === 0 && episode["hasEnglishSubtitle"] === 0 && episode["isAired"]) {
+			subtitleButton = '<img src="../icons/noSub.svg" alt="NoSub" title="Nincs magyar vagy angol felirat" class="ms-1 btn-sfw">';
+		}
 	} else {
-		muted = ' text-muted';
+		mutedClass = ' text-muted';
 		border = '';
 	}
-    
-        
 
 	// Return full content
-	return '<div class="row bg-light' + muted + border + ' rounded me-2 my-1" style="line-height: 1rem; margin-left: 2px;">\
-				<div class="col-2 text-center align-content-center py-2">\
-					<small class="text-right">' + formattedDate(ep) + '</small>\
-				</div>\
-				<div class="col-10 py-2">\
-					<span class="float-end py-2 text-right">' + pb0 + pb1 + pb2 + hunsub + downloaded + watched + '</span>\
-					<a href="http://sorfi.org/sorozat/' + series['name'] + '" target="_blank" class="fw-bold text-success' + muted + '">' +
-						series['title'] + ' ' + ep['ese'] + 'x' + ep['eep'] + '</a><br><small class="text-muted">' + ep['etitle'] + '</small>\
-				</div>\
-			</div>';
+	return `<div class="row ${bgClass} ${mutedClass} ${border} rounded me-2 my-1" style="line-height: 1rem; margin-left: 2px;">
+				<div class="col-2 text-center align-content-center py-2">
+					<small class="text-right">${episode["airDateSimplified"]} <br> ${episode["airDayName"]} </small>
+				</div>
+				<div class="col-10 py-1">
+					<span class="float-end py-1 text-end">${searchLinks} ${subtitleButton} ${downloadButton}  ${watchButton} </span>
+					<a href="${baseUrl}sorozat/${episode['programmeName']}" target="_blank" class="fw-bold text-success ${mutedClass}">
+						${episode['programmePrimaryTitle']} ${episode['seasonNumber']}×${episode['episodeNumber']}
+					</a>
+					<br><small class="text-muted">${episode['title']}</small>
+				</div>
+			</div>`;
 }
 
 // Series data response handler function
-function onResponse(req)
+function processOverviewResponse(request)
 {
 	// Request handler function
-	if (req.readyState != 4)
+	if (request.readyState !== 4) {
 		return;
+	}
 
-	var sfdata = $('#sfdata');
+	let sfdata = document.getElementById("sfdata");
 
-	if (req.status != 200)
+	if (request.status !== 200)
 	{
-		sfdata.html("<p class=\"text-danger text-small\">Szinkronizálás...<br>Ha nem töltődik be az oldal, ellenőrizd a fiók adataid!</p>");
+		sfdata.innerHTML = `<p class="text-danger text-small">Szinkronizálás...<br>Ha nem töltődik be az oldal, ellenőrizd a fiók adataid a Beállításokban!</p>`;
 		return;
 	}
 
 	// Process JSON and fill HTML content
-	var data = JSON.parse(req.responseText);
-	sfdata.html('');
-	for (var i = 0, len = data.length; i < len; i++)
+	const data = JSON.parse(request.responseText);
+	sfdata.innerHTML = "";
+	for (let i = 0; i < data.length; i++)
 	{
-		var row = formattedEpisode(data[i]);
-		if (row)
-			sfdata.append(row);
+		const row = renderEpisodeRow(data[i]);
+		if (row) {
+			sfdata.insertAdjacentHTML("beforeend", row);
+		}
 	}
 
 	// Save the html content in the local cache for faster display next time
-	localStorage.contentCache = sfdata.html();
+	localStorage.contentCache = sfdata.innerHTML;
 	localStorage.contentCacheTS = Date.now();
 
 	// Sign up for image click events on all buttons
-	for (let img of document.querySelectorAll('img.lnkbtn'))
-		img.addEventListener('click', function () { toggleAPI(img); });
-    
-    var night = JSON.parse(localStorage.getItem('night'));
-    if (night == true) {
-        $('#sfdata .row').toggleClass('bg-dark bg-light');
-    }
+	for (let img of document.querySelectorAll('.c-button')) {
+		img.addEventListener('click', function () {
+			toggleButtonAction(img);
+		});
+	}
 }
 
 // Main function upon opening the dropdown window
-function sendRequest()
+function requestOverviewData()
 {
-	var req = new XMLHttpRequest();
-	req.open("GET", 'https://sorfi.org/api/json/oview/' + localStorage.keypass, true);
-	req.onreadystatechange = function () { onResponse(req); };
-	req.send();
+	const request = new XMLHttpRequest();
+	request.open("GET", baseUrl + 'api/overview/' + localStorage.keypass, true);
+	request.onreadystatechange = function () {
+		processOverviewResponse(request); 
+	};
+	request.send();
 }
-sendRequest();
+
+requestOverviewData();

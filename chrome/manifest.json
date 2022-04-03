@@ -1,6 +1,6 @@
 ﻿{
   "name": "Sorozat figyel\u0151 felirat értesítő",
-  "version": "3.1.10",
+  "version": "4.0.0",
   "manifest_version": 2,
   "description": "Sorozat figyelő felirat értesítő",
   "homepage_url": "https://sorfi.org",
@@ -26,7 +26,7 @@
   "permissions":
   [
     "https://sorfi.org/*",
-    "http://sorfi.org/*",
+    "https://sf10.sorfi.org/*",
     "notifications",
     "storage"
   ],

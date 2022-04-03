@@ -5,17 +5,34 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="author" content="resist">
 	<title>Sorozat figyelő felirat értesítő</title>
-	<script src="../js/jquery.min.js"></script>
 	<script src="sf-ch.js"></script>
 	<style>
 		.btn-sfw {
 			cursor: pointer;
-			width:1.5rem;
-			height:1.5rem;
+			width: 1.5rem;
+			height: 1.5rem;
 		}
 
 		h1 {
 			font-size: 1.5rem;
+		}
+
+		a.search-link {
+			font-weight: normal !important;
+			font-size: 1rem !important;
+			text-decoration: none !important;
+		}
+
+		.ti-new-window:before {
+			content: "#";
+		}
+
+		.text-brown {
+			color: #8b4513;
+		}
+
+		.text-orange {
+			color: #ffA500;
 		}
 	</style>
 </head>
@@ -23,18 +40,22 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<h1 class="text-uppercase"><a href="https://sorfi.org" target="_blank" class="text-decoration-none">Sorozat figyelő</a>  <small class="text-muted">// összefoglaló nézet</small></h1>
+					<h1 class="text-uppercase">
+						<a href="https://sorfi.org" target="_blank" class="text-decoration-none">
+							Sorozat figyelő
+						</a>
+						<small class="text-muted">// összefoglaló nézet</small>
+					</h1>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-12" id="sfdata">
-
-				</div>
+				<div class="col-12" id="sfdata"></div>
 			</div>
 
 			<div class="row">
-				<div class="col-12 text-muted c-footer">
+				<div id="footer" class="col-12 text-muted">
+					<small class="float-end text-muted me-2">Sorozat figyelő</small>
 				</div>
 			</div>
 		</div>

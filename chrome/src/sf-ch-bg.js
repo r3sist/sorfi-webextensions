@@ -1,36 +1,43 @@
+const baseUrl = "https://sf10.sorfi.org/";
+const counterUpdatesInMilliseconds = 600000; // 10 minutes
+const subtitleCheckingInMilliseconds = 10000; // 10 minutes
+
 // Prepare Local Storage
-if (!localStorage.isInitialized)
+if (!localStorage.getItem("isInitialized"))
 {
-	localStorage.keypass = 0;
-	localStorage.isInitialized = true;
+    localStorage.setItem("keypass", "0");
+    localStorage.setItem("isInitialized", "true");
 }
 
-var ID = 0;
+let ID = 0;
 var lastAvailableCount = 0;
 
 // Update Counter
-function updateCount(hint = 0)
+function updateCounter(hint = 0)
 {
-	chrome.browserAction.setBadgeBackgroundColor({ color: "#e3423e" });
+	chrome.browserAction.setBadgeBackgroundColor({ color: "#e3423e" }); // Windows red
 	// chrome.browserAction.setBadgeTextColor({ color: "#ffffff" }); // Firefox only: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/setBadgeTextColor
-	if (hint)
-		chrome.browserAction.setBadgeText({ text: (lastAvailableCount + hint).toString() });
+	if (hint) {
+        chrome.browserAction.setBadgeText({ text: (lastAvailableCount + hint).toString() });
+    }
 
-	var req = new XMLHttpRequest();
-	req.open("GET", 'https://sorfi.org/api/json/oview/' + localStorage.keypass, true);
-	req.onreadystatechange = function ()
-	{
-		if (req.readyState != 4 || req.status != 200)
-			return;
+    const req = new XMLHttpRequest();
+    req.open("GET", baseUrl + 'api/overview/' + localStorage.keypass, true);
+	req.onreadystatechange = function () {
+		if (req.readyState !== 4 || req.status !== 200) {
+            return;
+        }
 
 		// Process JSON and get unwatched and released count
-		var data = JSON.parse(req.responseText);
-		var availableCount = 0;
-		for (var i = 0, len = data.length; i < len; i++)
-			if (data[i]['w'] != 1 && data[i]['inair'] == 1)
-				++availableCount;
+		let data = JSON.parse(req.responseText);
+		let availableCount = 0;
+		for (let i = 0, len = data.length; i < len; i++) {
+            if (data[i]["isAired"] && !data[i]["markedAsWatched"]) {
+                ++availableCount;
+            }
+        }
 
-		lastAvailableCount = availableCount;
+        lastAvailableCount = availableCount;
         if (availableCount > 0) {
             chrome.browserAction.setBadgeText({ text: availableCount.toString() });
         }
@@ -40,29 +47,27 @@ function updateCount(hint = 0)
 
 function handleMessage(request, sender)
 {
-	if (request.action == "requestUpdateCount")
-		updateCount(request.counterAdjust);
+	if (request.action === "requestUpdateCount")
+		updateCounter(request.counterAdjust);
 }
 chrome.runtime.onMessage.addListener(handleMessage); // Add a listener for incoming messages
 
-updateCount();
-setInterval(updateCount, 60000 * 30); // Updates the counter every 30 minutes
-
-
+updateCounter();
+setInterval(updateCounter, counterUpdatesInMilliseconds);
 
 // Subtitle checker from v3.0.0
-var ID2 = 0;
-var refTime = Math.round((new Date()).getTime() / 1000);
+let ID2 = 0;
+let refTime = Math.round((new Date()).getTime() / 1000);
 
-function showNotification(stitle, ese, eep) {
+function showNotification(subtitle) {
     ID2++;
 
-    var opts = {
-        type : "basic",
-        title: "Új magyar felirat",
-        message: stitle+' '+ese+'×'+eep,
+    const opts = {
+        type: "basic",
+        title: "Új sorozat felirat",
+        message: `${subtitle["programmePrimaryTitle"]} ${subtitle["episodeSeason"]}×${subtitle["episodeNumber"]}`,
         iconUrl: "assets/sorfi_icon128.png",
-        buttons:[{title: "Sorozat figyelő megnyitása"}],
+        buttons: [{title: "Sorozat figyelő megnyitása"}],
         requireInteraction: true
     };
 
@@ -74,29 +79,33 @@ function creationCallback() {
 }
 
 function notificationBtnClick(notID, iBtn) {
-    chrome.tabs.create({ 'url': 'https://sorfi.org/' });
+    chrome.tabs.create({ 'url': baseUrl });
 }
 
-function checkSub() {
+function checkSubtitle() {
     setInterval(function() {
-        var req2 = new XMLHttpRequest();
-        req2.open("GET", 'https://sorfi.org/api/legacyjson/subtitles/'+refTime+'/'+localStorage.keypass, true);
+        const req2 = new XMLHttpRequest();
+        req2.open("POST", `${baseUrl}api/subtitle/alert/${refTime}/${localStorage.getItem("keypass")}`, true);
         req2.onreadystatechange = function() {
-            if (req2.readyState == 4) {
-                if (req2.status == 200) {
+            if (req2.readyState === 4) {
+                if (req2.status === 200) {
                     if (req2.responseText.length >= 1) {
-                        var subs = JSON.parse(req2.responseText);
-                        for (var i=0, len=subs.length; i < len; i++) {
-                            showNotification(subs[i]['stitle'], subs[i]['ese'], subs[i]['eep']);
+                        const subs = JSON.parse(req2.responseText);
+                        for (let i = 0, len = subs.length; i < len; i++) {
+                            showNotification(subs[i]);
                         }
                     }
                     refTime = Math.round((new Date()).getTime() / 1000);
                 }
             }
         };
-        req2.send();
-    }, 1000*60*2);
+        req2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        req2.send("referenceZone=" + encodeURI(Intl.DateTimeFormat().resolvedOptions().timeZone));
+    }, subtitleCheckingInMilliseconds);
 }
 
-document.addEventListener("DOMContentLoaded", checkSub);
-chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
+const subtitleChecking = JSON.parse(localStorage.getItem("subtitleChecking"));
+if (subtitleChecking === true) {
+    document.addEventListener("DOMContentLoaded", checkSubtitle);
+    chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
+}
