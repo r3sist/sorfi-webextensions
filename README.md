@@ -4,22 +4,21 @@
 
 https://github.com/r3sist/sorfi-webextensions/
 
-(c) 2019 ![bV](https://structure.hu/img/bV.png)  
+(c) 2022 ![bV](https://structure.hu/img/bV.png)  
 https://sorfi.org
 
 (c) 2018 Speeder
 
 ## Development
 
-+ Sorfi apps documentation: https://sorfi.org/dokumentacio/appok
-+ Sorfi API: https://sorfi.org/dokumentacio/api 
-+ Sorfi open source projects: https://sorfi.org/dokumentacio/opensource 
++ Sorfi apps documentation: https://sorfi.org/dokumentacio/app
++ Sorfi API: https://sorfi.org/dokumentacio/api
 + Sorfi contact: https://sorfi.org/dokumentacio/kapcsolat
 
 ## Usage
 
 API key must be set in extension's options page. API key can be found at the bottom of Sorfi Settings page.
-For more details visit wiki: https://sorfi.org/dokumentacio/appok 
+For more details visit wiki: https://sorfi.org/dokumentacio/app
 
 ## Releases and builds
 

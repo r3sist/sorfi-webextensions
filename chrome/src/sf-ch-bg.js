@@ -1,4 +1,4 @@
-const baseUrl = "https://sf10.sorfi.org/";
+const baseUrl = "https://sorfi.org/";
 const counterUpdatesInMilliseconds = 600000; // 10 minutes
 const subtitleCheckingInMilliseconds = 600000; // 10 minutes
 

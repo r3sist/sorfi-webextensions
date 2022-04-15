@@ -1,4 +1,4 @@
-﻿const baseUrl = "https://sf10.sorfi.org/";
+﻿const baseUrl = "https://sorfi.org/";
 
 window.addEventListener('load', function() {
 	// If the content cache is from the last hour, instantly display the content
