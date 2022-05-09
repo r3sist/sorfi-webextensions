@@ -84,23 +84,25 @@ function notificationBtnClick(notID, iBtn) {
 
 function checkSubtitle() {
     setInterval(function() {
-        const req2 = new XMLHttpRequest();
-        req2.open("POST", `${baseUrl}api/subtitle/alert/${refTime}/${localStorage.getItem("keypass")}`, true);
-        req2.onreadystatechange = function() {
-            if (req2.readyState === 4) {
-                if (req2.status === 200) {
-                    if (req2.responseText.length >= 1) {
-                        const subs = JSON.parse(req2.responseText);
-                        for (let i = 0, len = subs.length; i < len; i++) {
-                            showNotification(subs[i]);
+        if (localStorage.getItem("keypass") && localStorage.getItem("keypass") !== "0") {
+            const req2 = new XMLHttpRequest();
+            req2.open("POST", `${baseUrl}api/subtitle/alert/${refTime}/${localStorage.getItem("keypass")}`, true);
+            req2.onreadystatechange = function() {
+                if (req2.readyState === 4) {
+                    if (req2.status === 200) {
+                        if (req2.responseText.length >= 1) {
+                            const subs = JSON.parse(req2.responseText);
+                            for (let i = 0, len = subs.length; i < len; i++) {
+                                showNotification(subs[i]);
+                            }
                         }
+                        refTime = Math.round((new Date()).getTime() / 1000);
                     }
-                    refTime = Math.round((new Date()).getTime() / 1000);
                 }
-            }
-        };
-        req2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        req2.send("referenceZone=" + encodeURI(Intl.DateTimeFormat().resolvedOptions().timeZone));
+            };
+            req2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            req2.send("referenceZone=" + encodeURI(Intl.DateTimeFormat().resolvedOptions().timeZone));
+        }
     }, subtitleCheckingInMilliseconds);
 }
 
